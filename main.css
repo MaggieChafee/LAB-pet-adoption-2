@@ -1,0 +1,14 @@
+#filter-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+#app {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  row-gap: 10px;
+  column-gap: 10px;
+}
