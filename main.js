@@ -241,6 +241,7 @@ const pets = [
     }
   ];
 
+  // render cards to dom
 const renderToDom = (divId, htmlToRender) => {
   const selectedDiv = document.querySelector(divId);
   selectedDiv.innerHTML = htmlToRender;
@@ -263,6 +264,8 @@ renderToDom("#app",domString);
 }
 
 cardsOnDom(pets)
+
+// filter by pet type
 
 const filterAnimal = (type) => {
 const filteredPets = pets.filter((pet) => pet.type === type)
@@ -295,3 +298,65 @@ allBtn.addEventListener("click", () => {
   cardsOnDom(pets)
 }
 );
+
+//form shows up on dom and adds new pet card
+
+const showFormBtn = document.querySelector("#add-pet")
+
+const showForm = (e) => {
+ console.log("Clicked add with show form function")
+ let domString = ""
+ domString += `
+ <div>
+   <label class="pet-name">Pet Name</label>
+   <input type="text" class="form-control" id="pet-name" aria-describedby="emailHelp">
+ </div>
+ <div>
+   <label class="pet-color">Color</label>
+   <input type="text" class="form-control" id="pet-color" aria-describedby="emailHelp">
+ </div>
+ <div>
+   <label class="pet-skill">Special Skills</label>
+   <input type="text" class="form-control" id="pet-skill" aria-describedby="emailHelp">
+ </div>
+ <div>
+   <label class="pet-type">Cat</label>
+   <input type="radio" class="form-check-input" id="pet-type">
+   <label class="pet-type">Dog</label>
+   <input type="radio" class="form-check-input" id="pet-type">
+   <label class="pet-type">Dino</label>
+   <input type="radio" class="form-check-input" id="pet-type">
+ </div>
+ <div>
+   <label class="pet-image">Image</label>
+   <input type="url" class="form-control" id="pet-image" aria-describedby="emailHelp">
+ </div>
+ <button type="submit" class="btn btn-primary">Submit</button>`,
+renderToDom("#form-container", domString)
+};
+
+showFormBtn.addEventListener('click',(e) => {
+  showForm()
+  });
+
+const form = document.querySelector("#form")
+
+const createPet = (e) => {
+    e.preventDefault()
+    
+    const newPetObj = {
+      id: pets.length +1,
+      name: document.querySelector("#pet-name").value,
+      color: document.querySelector("#pet-color").value,
+      specialSkill: document.querySelector("#pet-skill").value,
+      type: document.querySelector("#pet-type").value,
+      imageUrl: document.querySelector("#pet-image").value
+      }
+    pets.push(newPetObj);
+    cardsOnDom(pets);
+    form.reset();
+  };
+  
+form.addEventListener('submit', createPet)
+
+cardsOnDom(pets);
