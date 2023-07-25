@@ -257,6 +257,7 @@ const cardsOnDom = (array) => {
         <p class="card-text">${pet.color}.</p>
         <p class="card-text">${pet.specialSkill}.</p>
         <p class="card-text">${pet.type}.</p>
+        <a href="#" class="btn btn-primary delete" id="delete--${pet.id}">Delete</a>
       </div>
       </div>`;
 }
@@ -299,7 +300,7 @@ allBtn.addEventListener("click", () => {
 }
 );
 
-//form shows up on dom and adds new pet card
+//form shows on dom 
 
 const showFormBtn = document.querySelector("#add-pet")
 
@@ -339,10 +340,12 @@ showFormBtn.addEventListener('click',(e) => {
   showForm()
   });
 
-const form = document.querySelector("#form")
+// adds new pet card to dom
+const form = document.querySelector("form")
 
 const createPet = (e) => {
-    e.preventDefault()
+    console.log("clicked submit");
+    e.preventDefault();
     
     const newPetObj = {
       id: pets.length +1,
@@ -359,4 +362,14 @@ const createPet = (e) => {
   
 form.addEventListener('submit', createPet)
 
-cardsOnDom(pets);
+// delete pet button working
+const app = document.querySelector('#app');
+app.addEventListener('click', (e) => {
+
+    if (e.target.id.includes("delete")) {
+        const [, id] = e.target.id.split("--")
+        const index = pets.findIndex(e => e.id === Number(id));
+        pets.splice(index, 1);
+        cardsOnDom(pets);
+    }
+  })
